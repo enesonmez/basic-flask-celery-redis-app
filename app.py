@@ -4,6 +4,7 @@
     celery -A tasks worker -l info -P eventlet
 """
 
+import slack
 from flask import Flask
 from celery import Celery
 from dotenv import load_dotenv
@@ -15,15 +16,17 @@ load_dotenv(dotenv_path=ENV_PATH)
 
 CELERY_BROKER_URL = os.environ['CELERY_BROKER_URL']
 CELERY_RESULT_BACKEND = os.environ['CELERY_RESULT_BACKEND']
-
+SLACK_TOKEN = os.environ['SLACK_TOKEN']
 
 app = Flask(__name__)
 celeryApp = Celery('celer_worker', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
+client = slack.WebClient(token=SLACK_TOKEN)
 
 
 @app.route('/')
 def main():
     return "Celery - Redis"
+
 
 @app.route('/pending/start_task')
 def start_task():
@@ -44,3 +47,10 @@ def task_status(task_id):
     status = celeryApp.AsyncResult(task_id, app=celeryApp)
     print("Called status method")
     return "Status of the Task " + str(status.state)
+
+
+@app.route('/send_message')
+def send_message():
+    # fill to channel_id and SLACK_TOKEN
+    r = celeryApp.send_task('tasks.slack_message', kwargs={'channel_id':''})
+    return r.id

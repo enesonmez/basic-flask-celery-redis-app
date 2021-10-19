@@ -25,6 +25,11 @@ $ celery -A tasks worker -l info -P eventlet
 
 * localhost:5000/pending/task_result/<task_id> -> if you request this route with your unique **task_id** it returns _result_ of your task
 
+### Send Message with Slack
+
+* localhost:5000/send_message -> if you request this route, new task _starts_ and your unique **task_id** returns. Posts
+to a slack channel in the back.
+
 ### Other
 #### Check status of task out
 
