@@ -1,2 +1,4 @@
 Flask
 celery[redis]
+slackclient
+eventlet
