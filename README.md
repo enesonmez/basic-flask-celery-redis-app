@@ -1,4 +1,4 @@
-# basic-flask-celery-redis-app
+<center># Basic Flask Celery Redis App</center>
 
 ## Quick start
 to start Flask sever:
