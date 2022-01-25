@@ -1,4 +1,4 @@
-<center># Basic Flask Celery Redis App</center>
+<h1 style="text-align: center;"># Basic Flask Celery Redis App</h1>
 
 ## Quick start
 to start Flask sever:
